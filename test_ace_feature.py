@@ -14,7 +14,7 @@ import torch
 from torch.cuda.amp import autocast
 from torch.utils.data import DataLoader
 
-import dsacstar
+import dsacstarsample
 from ace_network import Regressor, scores_to_points
 from dataset import CamLocDataset
 
@@ -315,7 +315,7 @@ if __name__ == '__main__':
 
                     inliers = torch.zeros(len(points_2d), dtype=torch.int)
 
-                    inlier_count = dsacstar.forward_sequence_rgb(
+                    inlier_count = dsacstarsample.forward_sequence_rgb(
                         points_3d,
                         points_2d,
                         inliers,
@@ -352,7 +352,7 @@ if __name__ == '__main__':
 
 
                 if not good_estimation:
-                    inlier_count = dsacstar.forward_rgb(
+                    inlier_count = dsacstarsample.forward_rgb(
                         scene_coordinates_3HW.unsqueeze(0),
                         out_pose,
                         opt.hypotheses,

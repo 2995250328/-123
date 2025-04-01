@@ -55,6 +55,7 @@ if __name__ == '__main__':
         raw_image = cv2.imread(filename)
         
         depth = depth_anything.infer_image(raw_image, args.input_size)
+        print(depth.type)
         
         depth = (depth - depth.min()) / (depth.max() - depth.min()) * 255.0
         depth = depth.astype(np.uint8)

@@ -10,6 +10,7 @@ from depth_anything_v2.dpt import DepthAnythingV2
 
 
 if __name__ == '__main__':
+    #####################################
     parser = argparse.ArgumentParser(description='Depth Anything V2')
     
     parser.add_argument('--img-path', type=str)
@@ -31,6 +32,7 @@ if __name__ == '__main__':
         'vitl': {'encoder': 'vitl', 'features': 256, 'out_channels': [256, 512, 1024, 1024]},
         'vitg': {'encoder': 'vitg', 'features': 384, 'out_channels': [1536, 1536, 1536, 1536]}
     }
+
     
     depth_anything = DepthAnythingV2(**model_configs[args.encoder])
     depth_anything.load_state_dict(torch.load(f'checkpoints/depth_anything_v2_{args.encoder}.pth', map_location='cpu'))

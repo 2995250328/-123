@@ -26,9 +26,9 @@ if len(opencv_lib_dir) == 0:
 	exit()
 
 setup(
-	name='dsacstar',
+	name='dsacstarsample',
 	ext_modules=[CppExtension(
-		name='dsacstar', 
+		name='dsacstarsample', 
 		sources=['dsacstar.cpp','thread_rand.cpp'],
 		include_dirs=[opencv_inc_dir],
 		library_dirs=[opencv_lib_dir],

@@ -1146,7 +1146,7 @@ int dsacstar_rgb_forward(
 //	return expectedLoss;
 //}
 
-PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
+PYBIND11_MODULE(dsacstarsample, m) {
 	m.def("forward_rgb", &dsacstar_rgb_forward, "DSAC* forward (RGB)");
 	m.def("forward_sequence_rgb", &sequence_rgb_forward, "DSAC* forward (sequence RGB)");
 	m.def("update_points", &generate_new_points, "update points for pose prediciton");

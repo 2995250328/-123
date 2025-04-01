@@ -463,7 +463,7 @@ class PointTracker(object):
     # Get offset ids needed to reference into pts_mem.
     offsets = self.get_offsets()
     # Width of track and point circles to be drawn.
-    stroke = 1
+    stroke = 4
     # Iterate through each track and draw it.
     for track in tracks:
       clr = myjet[int(np.clip(np.floor(track[1]*10), 0, 9)), :]*255
@@ -478,10 +478,11 @@ class PointTracker(object):
         pt2 = pts_mem[i+1][:2, idx2]
         p1 = (int(round(pt1[0])), int(round(pt1[1])))
         p2 = (int(round(pt2[0])), int(round(pt2[1])))
-        cv2.line(out, p1, p2, clr, thickness=stroke, lineType=16)
+        # 通过这行控制是否绘制轨迹
+        #cv2.line(out, p1, p2, clr, thickness=stroke, lineType=16)
         # Draw end points of each track.
         if i == N-2:
-          clr2 = (255, 0, 0)
+          clr2 = (0, 0, 255)
           cv2.circle(out, p2, stroke, clr2, -1, lineType=16)
 
 class VideoStreamer(object):
@@ -600,7 +601,7 @@ if __name__ == '__main__':
       help='Maximum length of point tracks (default: 5).')
   parser.add_argument('--nms_dist', type=int, default=4,
       help='Non Maximum Suppression (NMS) distance (default: 4).')
-  parser.add_argument('--conf_thresh', type=float, default=0.015,
+  parser.add_argument('--conf_thresh', type=float, default=0.001,
       help='Detector confidence threshold (default: 0.015).')
   parser.add_argument('--nn_thresh', type=float, default=0.7,
       help='Descriptor matching threshold (default: 0.7).')
@@ -686,6 +687,12 @@ if __name__ == '__main__':
     for pt in pts.T:
       pt1 = (int(round(pt[0])), int(round(pt[1])))
       cv2.circle(out2, pt1, 1, (0, 255, 0), -1, lineType=16)
+    #print(pts.shape)
+    # pt = pts.T[2,:]
+    # pt1 = (int(round(pt[0])), int(round(pt[1])))
+    # print(pts.T[1:20,:2])
+    # cv2.circle(out2, pt1, 1, (0, 255, 0), -1, lineType=16)
+
     cv2.putText(out2, 'Raw Point Detections', font_pt, font, font_sc, font_clr, lineType=16)
 
     # Extra output -- Show the point confidence heatmap.
@@ -706,6 +713,16 @@ if __name__ == '__main__':
       out = cv2.resize(out, (3*opt.display_scale*opt.W, opt.display_scale*opt.H))
     else:
       out = cv2.resize(out1, (opt.display_scale*opt.W, opt.display_scale*opt.H))
+
+    #     # 假设 pt1 是矩形中心点
+    # rect_size = 10  # 矩形边长的一半
+    # top_left = (pt1[0] - rect_size, pt1[1] - rect_size)  # 矩形左上角
+    # bottom_right = (pt1[0] + rect_size, pt1[1] + rect_size)  # 矩形右下角
+    # # 绘制黑色实心矩形
+    # cv2.circle(out, pt1, 20, (0, 255, 255), -1, lineType=16)
+    # cv2.rectangle(out, top_left, bottom_right, (0, 0, 0), -1, lineType=16)
+    # pt = np.array([600,0])
+    # cv2.circle(out, pt, 20, (0, 255, 255), -1, lineType=16)
 
     # Display visualization image to screen.
     if not opt.no_display:

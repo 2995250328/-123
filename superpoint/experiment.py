@@ -14,7 +14,7 @@ from superpoint.settings import EXPER_PATH
 logging.basicConfig(format='[%(asctime)s %(levelname)s] %(message)s',
                     datefmt='%m/%d/%Y %H:%M:%S', level=logging.INFO)
 import tensorflow as tf  # noqa: E402
-
+import torch 
 
 def train(config, n_iter, output_dir, pretrained_dir=None,
           checkpoint_name='model.ckpt'):
